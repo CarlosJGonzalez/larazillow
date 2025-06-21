@@ -1,6 +1,6 @@
 <template>
     <div>Index</div>
-    <Link href="/hello">Show Hello Page</Link>
+        <Link href="/hello">Show Hello Page</Link>
     <div>{{ message }}</div>    
 </template>
 
