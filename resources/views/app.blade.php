@@ -10,7 +10,7 @@
         @vite('resources/css/app.css')
         @inertiaHead
     </head>
-    <body class="bg-white dark: bg-gray-700">
+    <body class="bg-white dark: bg-gray-700 text-gray-800 dark:text-gray-300">
         @inertia
     </body>
 </html>
