@@ -89,7 +89,7 @@
         price: data.listing.price,
     })
     const update = () => {
-        form.put( `/listing/${data.listing.id}`, {
+        form.put( route('listing.update', data.listing.id), {
             onSuccess: () => router.replace('/listing'),
             onError: (errors) => {
                 form.errors = errors

@@ -85,7 +85,7 @@
         price: 0,
     })
     const create = () => {
-        form.post( '/listing', {
+        form.post( route('listing.store'), {
             onSuccess: () => router.replace('/listing'),
             onError: (errors) => {
                 form.errors = errors
