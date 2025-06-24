@@ -2,6 +2,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         <Box v-for="listing in listings" :key="listing.id">
             <Link :href="route('listing.show', listing.id)">
+                <Price :price="listing.price" class="text-xl" />
                 <ListingSpace :listing="listing" class="text-lg" />
                 <ListingAddress :listing="listing" class="text-gray-500" />
                 <Link :href="route('listing.edit', listing.id)">
@@ -20,6 +21,7 @@
     import ListingAddress from '@/Components/ListingAddress.vue';
     import Box from '@/Components/UI/Box.vue';
     import ListingSpace from '@/Components/UI/ListingSpace.vue';
+    import Price from '@/Components/UI/Price.vue';
     defineProps({
         listings: Array,
     })
