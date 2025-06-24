@@ -13,11 +13,12 @@
         "eslint": "^9.29.0",
         "eslint-plugin-vue": "^10.2.0",
         "laravel-vite-plugin": "^1.0",
-        "tailwindcss": "^4.1.10",
-        "vite": "^5.0"
+        "tailwindcss": "^3.4.14",
+        "vite": "^5.0",
+        "autoprefixer": "^10.4.20"
     },
     "dependencies": {
         "@inertiajs/vue3": "^2.0.12",
-        "@tailwindcss/vite": "^4.1.10"
+        "@vitejs/plugin-vue": "^5.1.4"
     }
 }

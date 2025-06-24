@@ -1,2 +1,17 @@
-@import "tailwindcss";
-@source "../views";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .label{
+        @apply block mb-1 text-gray-500 dark:text-gray-300 font-medium;
+    }
+
+    .input{
+        @apply block w-full p-2 rounded-md shadow-md border border-gray-300 dark:border-gray-600 text-gray-500;
+    }
+
+    .btn-primary{
+        @apply text-lg font-medium bg-indigo-600 hover:bg-indigo-200 text-white p-2 rounded-md;
+    }
+}
