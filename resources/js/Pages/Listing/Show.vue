@@ -20,18 +20,38 @@
                     Monthly Payment
                 </template>
                 <div>
-                    <label class="label">Interest rate(2.5%)</label>
-                    <input type="range" value="15" min="0.1" max="30" step="0.1" 
+                    <label class="label">Interest rate({{ interestRate }}%)</label>
+                    <input v-model.number="interestRate" type="range" value="15" min="0.1" max="30" step="0.1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appeareance-none cursor-pointer dark:bg-gray-700" />
-                    <label class="label">Duration (25 years)</label>
-                    <input type="range" value="15" min="3" max="35" step="1" 
+                    <label class="label">Duration ({{ duration }} years)</label>
+                    <input v-model="duration" type="range" value="15" min="3" max="35" step="1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appeareance-none cursor-pointer dark:bg-gray-700" />
         
                     <div class="text-gray-600 dark:text-gray-300 mt-2">
                         <div class="text-gray-400">
                             Your Monthly payment
                         </div>
-                        <Price :price="500" class="text-3xl" />
+                        <Price :price="monthlyPayment" class="text-3xl" />
+                    </div>
+                    <div class="mt-2 text-gray-500">
+                        <div class="flex justify-between mt-2">
+                            <div>Total Paid</div>
+                            <div>
+                                <Price :price="totalPaid" class="font-medium" />
+                            </div>                            
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <div>Principal Paid</div>
+                            <div>
+                                <Price :price="listing.price" class="font-medium" />
+                            </div>                            
+                        </div>
+                        <div class="flex justify-between mt-2">
+                            <div>Interest Paid</div>
+                            <div>
+                                <Price :price="totalInterest" class="font-medium" />
+                            </div>                            
+                        </div>                                                
                     </div>
                 </div>
             </Box>
@@ -44,7 +64,13 @@
     import Price from '@/Components/UI/Price.vue';
     import ListingSpace from '@/Components/UI/ListingSpace.vue';
     import Box from '@/Components/UI/Box.vue';
-    defineProps({
+    import {ref} from 'vue';
+    import {useMonthlyPayment} from '@/Composables/useMonthlyPayment.js';
+    const interestRate = ref(4.5)
+    const duration = ref(20)
+    const props = defineProps({
         listing: Object,
     })
+
+    const {monthlyPayment, totalPaid, totalInterest} = useMonthlyPayment(props.listing.price, interestRate,duration);
 </script>
