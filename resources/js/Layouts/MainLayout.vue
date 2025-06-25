@@ -8,13 +8,20 @@
                 <div>
                     <Link :href="route('listing.index')" class="text-xl text-indigo-600 dark: text-indigo-300 text-center">Larazillow</Link>
                 </div>
-                <div>
+                <div v-if="user" class="flex items-center gap-1">
+                    <div class="text-sm text-gray-500">
+                        {{user.name}}
+                    </div>
                     <Link :href="route('listing.create')" class="btn-primary">+ New Listing</Link>
+                    <Link :href="route('logout')" method="delete" as="button"> LogOut</Link>                    
+                </div>
+                <div v-else>
+                    <Link :href="route('login')" class="btn-primary">Sign-In</Link>
                 </div>
             </nav>
         </div>
     </header>
-    <main class="container mx-auto p-4">
+    <main class="container mx-auto p-4 w-full">
         <div v-if="flashSuccess" class="mb-4 border rounded-md shadow-sm border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-700 p-2">
             {{ flashSuccess }}
         </div>
@@ -33,4 +40,7 @@
         () => page.props.flash.success
     )
 
+    const user = computed(
+        () => page.props.user
+    )
 </script>
