@@ -15,7 +15,8 @@
                     <Link :href="route('listing.create')" class="btn-primary">+ New Listing</Link>
                     <Link :href="route('logout')" method="delete" as="button"> LogOut</Link>                    
                 </div>
-                <div v-else>
+                <div v-else class="flex items-center gap-2">
+                    <Link :href="route('user-account.create')">Register</Link>
                     <Link :href="route('login')" class="btn-primary">Sign-In</Link>
                 </div>
             </nav>
