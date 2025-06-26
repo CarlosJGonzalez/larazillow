@@ -29,15 +29,18 @@
                     {{form.errors.password_confirmation}}
                 </span>                  
             </div>            
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <button class="btn-primary w-full" type="submit">Register</button>
+                <div class="text-sm text-gray-500">
+                    <Link :href="route('login')"> Already have an account? Click here</Link>
+                </div>
             </div>
         </div>
     </form>
 </template>
 
 <script setup>
-    import { router, useForm } from '@inertiajs/vue3'
+    import { router, useForm, Link } from '@inertiajs/vue3'
     const form = useForm({
         name: null,
         email: null,
