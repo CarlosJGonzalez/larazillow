@@ -15,15 +15,18 @@
                     {{form.errors.password}}
                 </span>                
             </div>
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 <button class="btn-primary w-full" type="submit">Login</button>
+                <div class="text-gray-500 text-sm gap-1">
+                    <Link :href="route('user-account.create')">Need an account? Click here </Link>
+                </div>
             </div>
         </div>
     </form>
 </template>
 
 <script setup>
-    import { router, useForm } from '@inertiajs/vue3'
+    import { router, useForm, Link } from '@inertiajs/vue3';
     const form = useForm({
         email: null,
         password: null

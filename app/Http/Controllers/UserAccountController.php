@@ -16,6 +16,7 @@ class UserAccountController
 
     public function store( Request $request )
     {
+        //using make, $user->save() is required
         $user = User::create(
                 $request->validate([
                     'name'  => 'required|string|min:6',
