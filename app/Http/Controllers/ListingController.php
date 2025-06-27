@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
-class ListingController
+class ListingController extends Controller
 {
+    use AuthorizesRequests;
+
+    public function __construct()
+    {
+        $this->authorizeResource(Listing::class, 'listing');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +25,7 @@ class ListingController
         return inertia(
             'Listing/Index',
             [
-                'listings'   => Listing::all()
+                'listings'   => Listing::orderBy('created_at', 'desc')->get()
             ]
         );
     }
@@ -34,7 +43,7 @@ class ListingController
      */
     public function store(Request $request)
     {
-        Listing::create( 
+        $request->user()->listings()->create( 
             $request->validate([
                 'beds' => 'required|integer|min:1|max:20',
                 'baths' => 'required|integer|min:1|max:5',
@@ -56,6 +65,13 @@ class ListingController
      */
     public function show( Listing $listing )//Route Model Binding
     {
+        // if( !Auth::user() || Auth::user()->cannot('view', $listing ) ){
+        //     abort( 403 );
+        // }
+        
+        // if( !$this->authorize('view', $listing ) ){
+        //     abort( 403 );
+        // }
         return inertia(
             'Listing/Show',
             [
