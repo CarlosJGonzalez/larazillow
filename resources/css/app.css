@@ -15,8 +15,19 @@
         @apply text-sm text-red-500 dark:text-red-400
     }
 
+    .input-filter-r{
+        @apply placeholder:text-gray-400 dark:placeholder:text-gray-600 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-e-md;
+    }
+
+    .input-filter-l{
+        @apply placeholder:text-gray-400 dark:placeholder:text-gray-600 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-s-md
+    }
+
     .btn-primary{
         @apply text-lg font-medium bg-indigo-600 hover:bg-indigo-200 text-white p-2 rounded-md;
     }
 
+    .btn-normal{
+        @apply bg-gray-600 hover:bg-gray-500 text-white text-sm font-medium p-2 rounded-md;
+    }
 }
