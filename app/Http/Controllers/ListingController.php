@@ -24,14 +24,16 @@ class ListingController extends Controller
     {     
         $filters = $request->only(['priceFrom', 'priceTo', 'areaFrom', 'areaTo', 'beds', 'baths']);        
         $query = Listing::mostRecent()->filter( $filters );
-
+        if( $request->user() ){
+            $query->where('by_user_id', $request->user()->id);
+        }
         return inertia(
             'Listing/Index',
             [
                 'filters'   => $filters,
                 'listings'   => $query
                     ->orderBy('id', 'desc')
-                    ->paginate(10)
+                    ->paginate(9)
                     ->withQueryString()
             ]
         );
@@ -54,7 +56,7 @@ class ListingController extends Controller
             $request->validate([
                 'beds' => 'required|integer|min:1|max:20',
                 'baths' => 'required|integer|min:1|max:5',
-                'area' => 'required|integer|min:100|max:8000',
+                'area' => 'required|integer|min:500|max:4000',
                 'city' => 'required',
                 'street' => 'required',
                 'street_nr' => 'required|integer|min:1|max:2300',
@@ -109,7 +111,7 @@ class ListingController extends Controller
             $request->validate([
                 'beds' => 'required|integer|min:1|max:20',
                 'baths' => 'required|integer|min:1|max:5',
-                'area' => 'required|integer|min:100|max:8000',
+                'area' => 'required|integer|min:500|max:4000',
                 'city' => 'required',
                 'street' => 'required',
                 'street_nr' => 'required|integer|min:1|max:2300',
@@ -119,16 +121,5 @@ class ListingController extends Controller
         );
         return redirect()->route('listing.index')
             ->with( 'success', 'Listing was updated!');        
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Listing $listing )
-    {
-        $listing->delete();
-        
-        return redirect()->back()
-            ->with( 'success','Listing deleted');
     }
 }
