@@ -13,9 +13,6 @@
                 <Link :href="route('listing.edit', listing.id)">
                     Edit
                 </Link>
-                <Link :href="route('listing.destroy', listing.id)" method="delete">
-                    Delete
-                </Link> 
             </div>           
         </Link>
     </Box>

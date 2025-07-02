@@ -9,9 +9,9 @@
                     <Link :href="route('listing.index')" class="text-xl text-indigo-600 dark: text-indigo-300 text-center">Larazillow</Link>
                 </div>
                 <div v-if="user" class="flex items-center gap-1">
-                    <div class="text-sm text-gray-500">
+                    <Link class="text-sm text-gray-500" :href="route('realtor.listing.index')">
                         {{user.name}}
-                    </div>
+                    </Link>
                     <Link :href="route('listing.create')" class="btn-primary">+ New Listing</Link>
                     <Link :href="route('logout')" method="delete" as="button"> LogOut</Link>                    
                 </div>
