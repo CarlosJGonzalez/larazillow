@@ -14,7 +14,7 @@
                         <option value="created_at">Added</option>
                         <option value="price">Price</option>
                     </select>
-                    <select class="input-filter-r w-32" v-model="filterForm.order">
+                    <select class="input-filter-r w-24" v-model="filterForm.order">
                         <option 
                             v-for="option in sortOptions"
                             :key="option.value" 

@@ -8,12 +8,7 @@
                 </div>
             </div>
             <ListingSpace :listing="listing" class="text-lg" />
-            <ListingAddress :listing="listing" class="text-gray-500" />
-            <div v-if="user">
-                <Link :href="route('listing.edit', listing.id)">
-                    Edit
-                </Link>
-            </div>           
+            <ListingAddress :listing="listing" class="text-gray-500" />      
         </Link>
     </Box>
 </template>
