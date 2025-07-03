@@ -51,10 +51,13 @@ class ListingController extends Controller
         // if( !$this->authorize('view', $listing ) ){
         //     abort( 403 );
         // }
+        //Auth::user()->myListings();
+        $listing->load(['myimages']);
         return inertia(
             'Listing/Show',
             [
-                'listing'   => $listing
+                'listing'   => $listing,
+                'images'    => $listing->myimages
             ]
         );
     }

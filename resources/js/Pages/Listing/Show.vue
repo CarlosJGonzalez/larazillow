@@ -1,10 +1,10 @@
 <template>
-    <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">
-        <Box class="md:col-span-7 flex items-center">
-            <div class="w-full text-center font-medium text-gray-500">
-                Images
+    <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">  
+        <Box class="md:col-span-7 flex items-top" :class="{'items-center' : !images.length}">
+            <div v-if="images.length" class="grid grid-cols-2 gap-1">
+                <img v-for="image in images" :src="image.src" :key="image.id" />
             </div>
-            
+            <div v-else class="w-full text-center font-medium text-gray-500">No images found</div>
         </Box>
         <div class="md:col-span-5 p-2 flex flex-col gap-4">
             <Box>
@@ -21,10 +21,10 @@
                 </template>
                 <div>
                     <label class="label">Interest rate({{ interestRate }}%)</label>
-                    <input v-model.number="interestRate" type="range" value="15" min="0.1" max="30" step="0.1" 
+                    <input v-model.number="interestRate" type="range" min="0.1" max="30" step="0.1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appeareance-none cursor-pointer dark:bg-gray-700" />
                     <label class="label">Duration ({{ duration }} years)</label>
-                    <input v-model="duration" type="range" value="15" min="3" max="35" step="1" 
+                    <input v-model="duration" type="range" min="3" max="35" step="1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appeareance-none cursor-pointer dark:bg-gray-700" />
         
                     <div class="text-gray-600 dark:text-gray-300 mt-2">
@@ -66,10 +66,12 @@
     import Box from '@/Components/UI/Box.vue';
     import {ref} from 'vue';
     import {useMonthlyPayment} from '@/Composables/useMonthlyPayment.js';
-    const interestRate = ref(4.5)
+
+    const interestRate = ref(3.65)
     const duration = ref(20)
     const props = defineProps({
         listing: Object,
+        images: Object,
     })
 
     const {monthlyPayment, totalPaid, totalInterest} = useMonthlyPayment(props.listing.price, interestRate,duration);
