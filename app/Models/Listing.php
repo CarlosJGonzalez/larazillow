@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Listing extends Model
@@ -23,6 +24,12 @@ class Listing extends Model
         );
     }
 
+    public function myimages()
+    {
+        return $this->hasMany(
+            \App\Models\ListingImage::class
+        );
+    }
     public function scopeMostRecent( $query ){
         return $query->orderBy('created_at', 'desc');
     }
