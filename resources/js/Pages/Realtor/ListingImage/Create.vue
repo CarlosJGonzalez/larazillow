@@ -34,16 +34,27 @@
             </div>                
         </section>
     </Box>
+    <div v-if="imageErrors.length">
+        <div v-for="(error,index) in imageErrors" :key="index">
+            {{ error }}
+        </div>
+    </div>
 </template>
 
 <script setup>
     import Box from '@/Components/UI/Box.vue';
     import { useForm, Link } from '@inertiajs/vue3';
-
-    const props = defineProps({ listing: Object});
+    import { computed } from 'vue';
+    const props = defineProps({ 
+        listing: Object,
+        errors: Object,
+    });
     const form = useForm({
         images: [],
     });
+
+    //converting Object to Array
+    const imageErrors = computed(() => Object.values( form.errors));
 
     const upload = () =>{
         if( !form.images.length ){

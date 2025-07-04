@@ -24,7 +24,7 @@ class Listing extends Model
         );
     }
 
-    public function myimages()
+    public function myimages():HasMany
     {
         return $this->hasMany(
             \App\Models\ListingImage::class
