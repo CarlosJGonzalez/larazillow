@@ -24,6 +24,13 @@ class Listing extends Model
         );
     }
 
+    public function offers(): HasMany{
+        return $this->hasMany(
+            \App\Models\Offer::class,
+            'listing_id'
+        );
+    }
+    
     public function myimages():HasMany
     {
         return $this->hasMany(
