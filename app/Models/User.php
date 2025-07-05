@@ -46,6 +46,14 @@ class User extends Authenticatable
         ];
     }
 
+    public function offers():HasMany
+    {
+        return $this->hasMany(
+            \App\Models\Offer::class,
+            'bidder_id'
+        );
+    }
+
     public function myListings(): HasMany {
         return $this->hasMany(
             \App\Models\Listing::class,
