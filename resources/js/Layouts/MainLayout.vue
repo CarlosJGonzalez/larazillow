@@ -2,11 +2,13 @@
     <header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 w-full">
         <div class="container mx-auto">
             <nav class="p-4 flex items-center justify-between">
-                <div>
-                    <Link :href="route('listing.index')" class="text-lg font-medium underline">Listings</Link>
-                </div>
-                <div>
-                    <Link :href="route('realtor.listing.index')" class="text-xl text-indigo-600 dark: text-indigo-300 text-center">Larazillow</Link>
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <Link href="/" class="text-lg font-medium underline">Home</Link>
+                    </div> 
+                    <div>
+                        <Link :href="route('listing.index')" class="text-lg font-medium underline">Listings</Link>
+                    </div>
                 </div>
                 <div v-if="user" class="flex items-center gap-1">
                     <Link class="text-sm text-gray-500" :href="route('realtor.listing.index')">

@@ -31,6 +31,7 @@ class RealtorListingController extends Controller
                 'listings' => Auth::user()
                     ->myListings()
                     ->withCount('myimages')
+                    ->withCount('offers')
                     ->filter($filters)
                     ->paginate(5)
                     ->withQueryString()
@@ -38,6 +39,18 @@ class RealtorListingController extends Controller
         );
     }
 
+    public function show( Listing $listing )
+    {
+        return inertia( 'Realtor/Show',
+            ['listing' => $listing->load([
+                'offers' => function($query){
+                    $query->orderBy('amount', 'desc');
+                }, 'offers.bidder' => function($query){
+                    $query->select('id', 'name');
+                }
+            ])]
+        );
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -69,13 +82,13 @@ class RealtorListingController extends Controller
         $listing->update( 
             $request->validate([
                 'beds' => 'required|integer|min:1|max:20',
-                'baths' => 'required|integer|min:1|max:5',
-                'area' => 'required|integer|min:500|max:4000',
+                'baths' => 'required|decimal:0,2|min:1|max:5',
+                'area' => 'required|decimal:0,2|min:500|max:4000',
                 'city' => 'required',
                 'street' => 'required',
                 'street_nr' => 'required|integer|min:1|max:2300',
                 'code' => 'required',
-                'price' => 'required|integer|min:123450|max:20000000'
+                'price' => 'required|decimal:0,2|min:123450|max:20000000'
             ]) 
         );
         return redirect()->route('realtor.listing.index')
@@ -95,16 +108,16 @@ class RealtorListingController extends Controller
      */
     public function store(Request $request)
     {
-        $request->user()->listings()->create( 
+        $request->user()->myListings()->create( 
             $request->validate([
                 'beds' => 'required|integer|min:1|max:20',
-                'baths' => 'required|integer|min:1|max:5',
-                'area' => 'required|integer|min:500|max:4000',
+                'baths' => 'required|decimal:0,2|min:1|max:5',
+                'area' => 'required|decimal:0,2|min:500|max:4000',
                 'city' => 'required',
                 'street' => 'required',
                 'street_nr' => 'required|integer|min:1|max:2300',
                 'code' => 'required',
-                'price' => 'required|integer|min:123450|max:20000000'
+                'price' => 'required|decimal:0,2|min:123450|max:20000000'
             ]) 
         );
 

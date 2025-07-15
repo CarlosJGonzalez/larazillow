@@ -6,7 +6,6 @@ use App\Models\Offer;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Redis;
 
 class ListingOfferController extends Controller
 {
