@@ -75,7 +75,7 @@
     import {useMonthlyPayment} from '@/Composables/useMonthlyPayment.js';
     import MakeOffer from './Show/Components/MakeOffer.vue';
     import { usePage } from '@inertiajs/vue3';
-import HasOffer from './Show/Components/HasOffer.vue';
+    import HasOffer from './Show/Components/HasOffer.vue';
     const interestRate = ref(3.65)
     const duration = ref(20)
     const props = defineProps({

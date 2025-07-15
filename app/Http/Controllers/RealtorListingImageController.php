@@ -36,6 +36,11 @@ class RealtorListingImageController extends Controller
 
                 $image = new ListingImage(['filename' => $path ]);
                 $listing->myimages()->save( $image );
+                // Then copy it to public_html/storage
+                copy(
+                    storage_path('app/public/'.$path),
+                    public_path('storage/'.$path)
+                );                 
             }
         }
 

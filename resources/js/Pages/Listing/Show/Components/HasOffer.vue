@@ -1,6 +1,6 @@
 <template>
     <Box>
-        <template #header>Current Offer</template>
+        <template #header>Offer Made</template>
         <Price class="text-2xl" :price="offer.amount" />
         <section class="mt-2 flex flex-col md:flex-row justify-between text-gray-500">
             <div>Made on</div>
