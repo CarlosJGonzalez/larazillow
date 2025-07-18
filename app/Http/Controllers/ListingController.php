@@ -32,6 +32,8 @@ class ListingController extends Controller
             [
                 'filters'   => $filters,
                 'listings'   => $query
+                    ->filter($filters)
+                    ->withoutSold()
                     ->orderBy('id', 'desc')
                     ->paginate(9)
                     ->withQueryString()
@@ -44,14 +46,6 @@ class ListingController extends Controller
      */
     public function show( Listing $listing )//Route Model Binding
     {
-        // if( !Auth::user() || Auth::user()->cannot('view', $listing ) ){
-        //     abort( 403 );
-        // }
-        
-        // if( !$this->authorize('view', $listing ) ){
-        //     abort( 403 );
-        // }
-        //Auth::user()->myListings();
         $listing->load(['myimages']);
         $offer = !Auth::user() ? null : $listing->offers()->byMe()->first();
 
