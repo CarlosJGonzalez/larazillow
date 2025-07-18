@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 
-class RealtorListingAcceptOfferController
+class RealtorListingAcceptOfferController extends Controller
 {
     public function __invoke( Offer $offer )
     {
+        $listing = $offer->listing;
+        $this->authorize( 'update', $listing );
+
         //Accept the selected offer
         $offer->update(['accepted_at' => now()]);
 
+        $listing->sold_at = now();
+        $listing->save();
+
         //Reject all others
-        $offer->listing->offers()->except($offer)
+        $listing->offers()->except($offer)
             ->update(['rejected_at' => now()]);
 
         return redirect()->back()
