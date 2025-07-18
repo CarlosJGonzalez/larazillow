@@ -1,11 +1,12 @@
 <template>
     <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">  
-        <Box class="md:col-span-7 flex items-top" :class="{'items-center' : !listing.myimages.length}">
-            <div v-if="listing.myimages.length" class="grid grid-cols-2 gap-1">
+        <Box v-if="listing.myimages.length" class="md:col-span-7 flex items-top" :class="{'items-center' : !listing.myimages.length}">
+            <div class="grid grid-cols-2 gap-1">
                 <img v-for="image in listing.myimages" :src="image.src" :key="image.id" />
             </div>
-            <div v-else class="w-full text-center font-medium text-gray-500">No images found</div>
         </Box>
+        <EmptyState v-else class="md:col-span-7 flex items-top" :class="{'items-center' : !listing.myimages.length}">No Images</EmptyState>
+
         <div class="md:col-span-5 p-2 flex flex-col gap-4">
             <Box>
                 <template #header>
@@ -75,7 +76,8 @@
     import {useMonthlyPayment} from '@/Composables/useMonthlyPayment.js';
     import MakeOffer from './Show/Components/MakeOffer.vue';
     import { usePage } from '@inertiajs/vue3';
-    import HasOffer from './Show/Components/HasOffer.vue';
+    import HasOffer from '@/Pages/Listing/Show/Components/HasOffer.vue';
+    import EmptyState from '@/Components/UI/EmptyState.vue';
     const interestRate = ref(3.65)
     const duration = ref(20)
     const props = defineProps({
