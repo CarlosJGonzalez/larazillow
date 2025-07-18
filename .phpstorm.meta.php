@@ -2505,8 +2505,11 @@ namespace PHPSTORM_META {
 'signed','throttle','verified',);
         registerArgumentsSet('routes', 
 'debugbar.openhandler','debugbar.clockwork','debugbar.assets.css','debugbar.assets.js','debugbar.cache.delete',
-'debugbar.queries.explain','ignition.healthCheck','ignition.executeSolution','ignition.updateConfig','listing.index','listing.create','listing.store',
-'listing.show','listing.edit','listing.update','listing.destroy',);
+'debugbar.queries.explain','ignition.healthCheck','ignition.executeSolution','ignition.updateConfig',
+'home','listing.index','listing.show','listing.offer.store',
+'login','login.store','logout','user-account.create','user-account.store','realtor.listing.restore','realtor.offer.accept','realtor.listing.index','realtor.listing.create',
+'realtor.listing.store','realtor.listing.show','realtor.listing.edit','realtor.listing.update','realtor.listing.destroy',
+'realtor.listing.image.create','realtor.listing.image.store','realtor.listing.image.destroy',);
         registerArgumentsSet('views', 
 'app','laravel-exceptions-renderer::components.card','laravel-exceptions-renderer::components.context','laravel-exceptions-renderer::components.editor','laravel-exceptions-renderer::components.header',
 'laravel-exceptions-renderer::components.icons.chevron-down','laravel-exceptions-renderer::components.icons.chevron-up','laravel-exceptions-renderer::components.icons.computer-desktop','laravel-exceptions-renderer::components.icons.moon','laravel-exceptions-renderer::components.icons.sun',
