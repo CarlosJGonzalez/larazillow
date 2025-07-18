@@ -6,9 +6,11 @@ use App\Models\Offer;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ListingOfferController extends Controller
 {
+    use AuthorizesRequests;
     public function store( Listing $listing, Request $request)
     {
         $this->authorize( 'view', $listing );
