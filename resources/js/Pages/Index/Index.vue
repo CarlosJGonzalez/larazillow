@@ -5,7 +5,7 @@
             <div>
                 <Box href="/more" class="flex flex-col md:grid md:grid-flow-col gap-3 justify-items-center border m-2 border-gray-600">
                     <div class="col-span-6 m-2">
-                        <img src="https://myrecp.com/public/storage/images/home.png" />                        
+                        <img src="https://dev.myrecp.com/public/storage/images/home.png" />                        
                     </div>
                     <div class="col-span-6 m-2 flex items-center">
                         <div class="text-4xl text-white ext-left">This site is under development. It's a partial result of a course I'm currently developing: Creating Advanced SPAs with Laravel Version 11 + Inertia (VueJS) + TailwindCSS
@@ -18,7 +18,7 @@
                         <div class="bold text-4xl text-white">We will guide you and help to make your best investment.</div>
                     </div>
                     <div class="col-span-6 m-2">
-                        <img src="https://myrecp.com/public/storage/images/success.png" />
+                        <img src="https://dev.myrecp.com/public/storage/images/success.png" />
                     </div>
                 </Box>                
             </div>
@@ -37,5 +37,5 @@
 
 </template>
 <script setup>
-const videoUrl = "https://myrecp.com/public/storage/images/agent1.mp4"
+const videoUrl = "https://dev.myrecp.com/public/storage/images/agent1.mp4"
 </script>
