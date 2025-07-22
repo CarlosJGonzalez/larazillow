@@ -35,6 +35,9 @@
         <div v-if="flashSuccess" class="mb-4 border rounded-md shadow-sm border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-700 p-2">
             {{ flashSuccess }}
         </div>
+        <div v-if="flashError" class="mb-4 rounded-md border shadow-sm border-red-700 dark:border-red-300 bg-red-50 dark:bg-red-700 p-2">
+            {{ flashError }}
+        </div>
         <slot></slot>
     </main>
 
@@ -49,6 +52,10 @@
     const flashSuccess = computed(
         () => page.props.flash.success
     );
+
+    const flashError = computed(
+        () => page.props.flash.error
+    )
 
     const user = computed(
         () => page.props.user

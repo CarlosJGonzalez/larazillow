@@ -21,7 +21,10 @@
             </div>
             <div >
                 <Link v-if="!isSold"
-                    method="put" :href="route('realtor.offer.accept', {offer: offer.id })" as="button" class="btn-outline text-xs font-medium">
+                    method="put" 
+                    :href="route('realtor.offer.accept', {offer: offer.id })" as="button" 
+                    class="btn-outline text-xs font-medium"
+                >
                     Accept
                 </Link>
             </div>

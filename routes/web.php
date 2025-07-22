@@ -25,7 +25,7 @@ Route::resource( 'listing.offer', ListingOfferController::class)
 
 Route::resource('notification', NotificationController::class)
     ->middleware('auth')
-    ->only(['index']);
+    ->only(['index', 'update']);
 
 Route::get( 'login', [AuthController::class, 'create'])
     ->name('login');
