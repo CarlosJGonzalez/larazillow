@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class RealtorListingAcceptOfferController extends Controller
