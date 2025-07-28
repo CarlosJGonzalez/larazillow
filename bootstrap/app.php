@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\HandleInertiaRequests;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,13 +13,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        
+        $middleware->alias([
+            'verified' => EnsureEmailIsVerified::class,
+        ]);
+
         $middleware->web(append: [
             HandleInertiaRequests::class,
         ]);
+
         $middleware->validateCsrfTokens(except: [
             '/logout',
             '/realtor/listing/*'
         ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

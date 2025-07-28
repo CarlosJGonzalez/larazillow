@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 
 class UserAccountController
 {
@@ -25,7 +26,7 @@ class UserAccountController
                 ])
             );
         Auth::login( $user );
-        
+        event( new Registered( $user ) );
         return redirect()->route('listing.index')
             ->with('success', 'Account created!');
     }
