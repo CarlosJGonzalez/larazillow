@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\RealtorListingAcceptOfferController;
+use Inertia\Inertia;
 
 Route::get('/', [IndexController::class, 'index'])
     ->name('home');
@@ -37,12 +39,19 @@ Route::delete( 'logout', [AuthController::class, 'destroy'])
     ->name( 'logout');
 
 Route::get('/email/verify', function () {
-    return inertia('Auth/VerifyEmail');
+    $user = Auth::user();
+    $url = URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $user->id, 'hash' => sha1($user->email)]
+    );
+
+    return inertia::render('Auth/VerifyEmail',['url' => $url]);
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function( EmailVerificationRequest $request ){
     $request->fulfill();
-    return redirect('/');
+    return redirect('/realtor/listing');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post( '/email/verification-notification', function( Request $request ){
