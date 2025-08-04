@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="md:col-span-5 p-2 flex flex-col gap-4 rounded-lg shadow">
-        <video autoplay="true" playsinline loop class="mx-auto w-full max-w-2xl">
+        <video muted autoplay="true" playsinline loop class="mx-auto w-full max-w-2xl">
             <source :src="videoUrl" type="video/mp4">
             Your browser does not support the video tag.
         </video>
