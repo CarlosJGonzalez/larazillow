@@ -80,3 +80,4 @@ jobs:
             | ssh "${SSH_OPTS[@]}" "$REMOTE" "tar -xzf - -C '$TARGET'"
 
           ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p '$TARGET/storage'"
+          ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p '$TARGET/storage/images' '$TARGET/public/storage' && ln -sfn '$TARGET/storage/images' '$TARGET/public/storage/images'"
