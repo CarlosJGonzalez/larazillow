@@ -85,5 +85,5 @@ Route::prefix( 'realtor' )
     });
 ;
 
-Route::get('/realtor/listing/images/library', [RealtorListingImageController::class, 'library'])
+Route::get('realtor/listing/images/library', [RealtorListingImageController::class, 'library'])
     ->name('realtor.listing.image.library');
