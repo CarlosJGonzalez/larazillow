@@ -84,3 +84,6 @@ Route::prefix( 'realtor' )
             ->only(['create', 'store', 'destroy']);
     });
 ;
+
+Route::get('/realtor/listing/images/library', [RealtorListingImageController::class, 'library'])
+    ->name('realtor.listing.image.library');
