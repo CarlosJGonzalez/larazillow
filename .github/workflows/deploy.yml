@@ -11,7 +11,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
 
       - name: Install Composer dependencies
         shell: bash
@@ -23,6 +28,19 @@ jobs:
               --prefer-dist \
               --optimize-autoloader \
               --no-interaction
+          fi
+
+      - name: Install and build frontend assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f package.json ]; then
+            if [ -f package-lock.json ]; then
+              npm ci
+            else
+              npm install
+            fi
+            npm run build
           fi
 
       - name: Prepare SSH key
@@ -58,6 +76,5 @@ jobs:
             --exclude='.env' \
             --exclude='node_modules' \
             --exclude='tests' \
-            --exclude='storage' \
             -czf - . \
             | ssh "${SSH_OPTS[@]}" "$REMOTE" "tar -xzf - -C '$TARGET'"
