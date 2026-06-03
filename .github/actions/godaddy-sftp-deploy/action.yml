@@ -1,0 +1,80 @@
+name: "GoDaddy SFTP Deploy"
+description: "Deploy a PHP application to a GoDaddy shared hosting account over SSH/SFTP."
+
+inputs:
+  sftp_host:
+    description: "SSH/SFTP host name or IP."
+    required: true
+  sftp_port:
+    description: "SSH/SFTP port."
+    required: false
+    default: "22"
+  sftp_username:
+    description: "SSH/SFTP username."
+    required: true
+  sftp_private_key:
+    description: "Private key used to authenticate to the host."
+    required: true
+  target_path:
+    description: "Remote deploy directory."
+    required: false
+    default: "/home/yox8gc0h2lov/public_html/myrecp.com"
+  source_path:
+    description: "Local path to deploy from."
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Composer dependencies
+      shell: bash
+      working-directory: ${{ inputs.source_path }}
+      run: |
+        set -euo pipefail
+        if [ -f composer.json ]; then
+          composer install \
+            --no-dev \
+            --prefer-dist \
+            --optimize-autoloader \
+            --no-interaction
+        fi
+
+    - name: Prepare SSH key
+      shell: bash
+      run: |
+        set -euo pipefail
+        install -d -m 700 ~/.ssh
+        printf '%s\n' "${{ inputs.sftp_private_key }}" > ~/.ssh/godaddy_deploy_key
+        chmod 600 ~/.ssh/godaddy_deploy_key
+        ssh-keyscan -p "${{ inputs.sftp_port }}" -H "${{ inputs.sftp_host }}" >> ~/.ssh/known_hosts
+
+    - name: Deploy files
+      shell: bash
+      working-directory: ${{ inputs.source_path }}
+      run: |
+        set -euo pipefail
+
+        SSH_OPTS=(
+          -i ~/.ssh/godaddy_deploy_key
+          -p "${{ inputs.sftp_port }}"
+          -o BatchMode=yes
+          -o StrictHostKeyChecking=yes
+        )
+
+        REMOTE="${{ inputs.sftp_username }}@${{ inputs.sftp_host }}"
+        TARGET="${{ inputs.target_path }}"
+
+        ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p '$TARGET'"
+
+        ssh "${SSH_OPTS[@]}" "$REMOTE" "find '$TARGET' -mindepth 1 -maxdepth 1 ! -name '.env' ! -name 'storage' ! -name '.user.ini' -exec rm -rf {} +"
+
+        tar \
+          --exclude='.git' \
+          --exclude='.github' \
+          --exclude='.env' \
+          --exclude='node_modules' \
+          --exclude='tests' \
+          --exclude='storage' \
+          -czf - . \
+          | ssh "${SSH_OPTS[@]}" "$REMOTE" "tar -xzf - -C '$TARGET'"
