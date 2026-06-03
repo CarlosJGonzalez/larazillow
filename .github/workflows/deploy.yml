@@ -78,3 +78,5 @@ jobs:
             --exclude='tests' \
             -czf - . \
             | ssh "${SSH_OPTS[@]}" "$REMOTE" "tar -xzf - -C '$TARGET'"
+
+          ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p '$TARGET/storage'"
