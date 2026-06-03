@@ -1,0 +1,63 @@
+name: Deploy to GoDaddy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Composer dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f composer.json ]; then
+            composer install \
+              --no-dev \
+              --prefer-dist \
+              --optimize-autoloader \
+              --no-interaction
+          fi
+
+      - name: Prepare SSH key
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "${{ secrets.SFTP_PRIVATE_KEY }}" > ~/.ssh/godaddy_deploy_key
+          chmod 600 ~/.ssh/godaddy_deploy_key
+          ssh-keyscan -p "${{ secrets.SFTP_PORT }}" -H "${{ secrets.SFTP_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy application
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          SSH_OPTS=(
+            -i ~/.ssh/godaddy_deploy_key
+            -p "${{ secrets.SFTP_PORT }}"
+            -o BatchMode=yes
+            -o StrictHostKeyChecking=yes
+          )
+
+          REMOTE="${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }}"
+          TARGET="/home/yox8gc0h2lov/public_html/myrecp.com"
+
+          ssh "${SSH_OPTS[@]}" "$REMOTE" "mkdir -p '$TARGET'"
+          ssh "${SSH_OPTS[@]}" "$REMOTE" "find '$TARGET' -mindepth 1 -maxdepth 1 ! -name '.env' ! -name 'storage' ! -name '.user.ini' -exec rm -rf {} +"
+
+          tar \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.env' \
+            --exclude='node_modules' \
+            --exclude='tests' \
+            --exclude='storage' \
+            -czf - . \
+            | ssh "${SSH_OPTS[@]}" "$REMOTE" "tar -xzf - -C '$TARGET'"
