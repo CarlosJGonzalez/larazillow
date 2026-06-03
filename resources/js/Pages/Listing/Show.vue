@@ -1,7 +1,13 @@
 <template>
+    <div>
+        <Link
+            :href="route('listing.index')">
+                &lt;- Go back to Listings
+        </Link>
+    </div>
     <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">  
         <Box v-if="listing.myimages.length" class="md:col-span-7 flex items-top" :class="{'items-center' : !listing.myimages.length}">
-            <div class="grid grid-cols-2 gap-1">
+            <div class="gap-1 flex flex-col ">
                 <img v-for="image in listing.myimages" :src="image.src" :key="image.id" />
             </div>
         </Box>
@@ -75,7 +81,7 @@
     import { ref, computed } from 'vue';
     import {useMonthlyPayment} from '@/Composables/useMonthlyPayment.js';
     import MakeOffer from './Show/Components/MakeOffer.vue';
-    import { usePage } from '@inertiajs/vue3';
+    import { usePage, Link } from '@inertiajs/vue3';
     import HasOffer from '@/Pages/Listing/Show/Components/HasOffer.vue';
     import EmptyState from '@/Components/UI/EmptyState.vue';
     const interestRate = ref(3.65)
