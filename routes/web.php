@@ -1,18 +1,19 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\ListingImageController;
 use App\Http\Controllers\ListingOfferController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RealtorListingAcceptOfferController;
 use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
+use App\Http\Controllers\UserAccountController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\RealtorListingAcceptOfferController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 Route::get('/', [IndexController::class, 'index'])
@@ -80,10 +81,10 @@ Route::prefix( 'realtor' )
             //->only(['index', 'destroy', 'edit', 'update', 'create', 'store', 'show'])
             ->withTrashed();
 
+        Route::get('listing/images/library', [ListingImageController::class, 'library'])
+            ->name('listing.image.library');
+
         Route::resource( 'listing.image', RealtorListingImageController::class)
             ->only(['create', 'store', 'destroy']);
     });
 ;
-
-Route::get('realtor/listing/images/library', [RealtorListingImageController::class, 'library'])
-    ->name('realtor.listing.image.library');
