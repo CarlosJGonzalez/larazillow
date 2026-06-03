@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
-class ListingImageController
+class ListingImageController extends Controller
 {
     public function library()
     {
-        $path = storage_path('app/public/images');
+        $files = Storage::disk('public')->allFiles('images');
 
-        if (!File::exists($path)) {
-            return response()->json([]);
-        }
-
-        $images = collect(File::files($path))
-            ->filter(function ($file) {
-                return in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+        $images = collect($files)
+            ->filter(function (string $path) {
+                return in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), [
+                    'jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'
+                ], true);
             })
-            ->map(function ($file) {
+            ->map(function (string $path) {
                 return [
-                    'name' => $file->getFilename(),
-                    'path' => $file->getFilename(),
-                    'src' => asset('storage/images/' . $file->getFilename()),
+                    'name' => basename($path),
+                    'path' => $path,
+                    'src' => asset('storage/' . $path),
                 ];
             })
             ->values();
 
-        return response()->json($images);    
+        return response()->json($images);
     }
 }
