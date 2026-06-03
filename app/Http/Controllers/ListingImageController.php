@@ -10,7 +10,7 @@ class ListingImageController
 {
     public function library()
     {
-        $path = storage_path('images');
+        $path = storage_path('app/public/images');
 
         if (!File::exists($path)) {
             return response()->json([]);
