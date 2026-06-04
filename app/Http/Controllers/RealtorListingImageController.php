@@ -42,6 +42,8 @@ class RealtorListingImageController extends Controller
                     public_path('storage/'.$path)
                 );                 
             }
+        }else{
+            return redirect()->back()->with( 'error', 'No image was sent' );
         }
 
         return redirect()->back()->with('success', 'Images uploaded!');
