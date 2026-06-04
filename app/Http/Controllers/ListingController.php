@@ -25,7 +25,7 @@ class ListingController extends Controller
         $filters = $request->only(['priceFrom', 'priceTo', 'areaFrom', 'areaTo', 'beds', 'baths']);        
         $query = Listing::mostRecent()->filter( $filters );
         if( $request->user() ){
-            $query->where('by_user_id', $request->user()->id);
+            $query->whereNot('by_user_id', $request->user()->id);
         }
         return inertia(
             'Listing/Index',
